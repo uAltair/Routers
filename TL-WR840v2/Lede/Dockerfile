@@ -10,7 +10,7 @@ RUN apt-get update &&\
 	sudo -iu lede lede-project/scripts/feeds install -a -p luci &&\
 	sudo -iu lede curl https://raw.githubusercontent.com/uAltair/Routers/master/TL-WR840v2/Lede/Diffconfig --output /home/lede/lede-project/.config
 # set user
-USER openwrt
+USER lede
 # set workdir
 WORKDIR /home/lede/lede-project
 
