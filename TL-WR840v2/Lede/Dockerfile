@@ -11,8 +11,8 @@ USER lede
 # set workdir
 WORKDIR /home/lede/lede-project
 
-RUN /scripts/feeds update
-RUN /scripts/feeds install -a -p luci &&\
+RUN scripts/feeds update
+RUN scripts/feeds install -a -p luci &&\
 RUN curl https://raw.githubusercontent.com/uAltair/Routers/master/TL-WR840v2/Lede/Diffconfig --output .config
 RUN make defconfig
 RUN make download
