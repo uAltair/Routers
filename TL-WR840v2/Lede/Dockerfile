@@ -8,7 +8,11 @@ RUN apt-get update &&\
 	sudo -iu lede git clone -b master https://github.com/lede-project/source.git lede-project &&\
 	sudo -iu lede lede-project/scripts/feeds update &&\
 	sudo -iu lede lede-project/scripts/feeds install -a -p luci &&\
-	sudo -iu lede curl https://raw.githubusercontent.com/uAltair/Routers/master/TL-WR840v2/Lede/Diffconfig --output /home/lede/lede-project/.config &&\
-	sudo -iu lede cd /home/lede/lede-project/ &&\
-	sudo -iu lede make defconfig &&\
-	sudo -iu lede make download
+	sudo -iu lede curl https://raw.githubusercontent.com/uAltair/Routers/master/TL-WR840v2/Lede/Diffconfig --output /home/lede/lede-project/.config
+# set user
+USER openwrt
+# set workdir
+WORKDIR /home/lede/lede-project
+
+RUN make defconfig
+RUN make download
