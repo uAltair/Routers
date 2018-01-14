@@ -5,9 +5,8 @@ RUN apt-get update &&\
 	apt-get clean -y &&\
 	useradd -m lede &&\
 	echo 'lede ALL=NOPASSWD: ALL' > /etc/sudoers.d/lede &&\
-	sudo -iu lede  git clone -b master https://github.com/lede-project/source.git lede-project &&\
+	sudo -iu lede git clone -b master https://github.com/lede-project/source.git lede-project &&\
 	sudo -iu lede lede-project/scripts/feeds update &&\
 	sudo -iu lede lede-project/scripts/feeds install -a -p luci &&\
-	sudo -iu lede curl https://raw.githubusercontent.com/uAltair/Routers/master/TL-WR840v2/Lede/Diffconfig --output /home/lede/lede-project/ %%\
-	sudo -iu lede make defconfig  &&\
-	sudo -iu lede make download &&\
+	sudo -iu lede curl https://raw.githubusercontent.com/uAltair/Routers/master/TL-WR840v2/Lede/Diffconfig --output /home/lede/lede-project/
+	
