@@ -5,7 +5,7 @@ RUN apt-get update &&\
 	apt-get clean -y &&\
  	useradd -m openwrt &&\
 	echo 'openwrt ALL=NOPASSWD: ALL' > /etc/sudoers.d/openwrt &&\
-	sudo -iu openwrt git clone -b master https://github.com/openwrt/openwrt.git openwrt-project
+	sudo -iu openwrt git clone -b master https://github.com/uAltair/openwrt.git openwrt-project
 	
 # set user
 USER openwrt
