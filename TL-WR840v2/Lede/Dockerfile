@@ -5,7 +5,7 @@ RUN apt-get update &&\
 	apt-get clean -y &&\
  	useradd -m lede &&\
 	echo 'lede ALL=NOPASSWD: ALL' > /etc/sudoers.d/lede &&\
-	sudo -iu lede git clone -b master https://github.com/lede-project/source.git lede-project
+	sudo -iu lede git clone -b master https://github.com/uAltair/source.git lede-project
 	
 # set user
 USER lede
