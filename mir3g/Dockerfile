@@ -1,7 +1,9 @@
 FROM ubuntu:latest
 
 RUN apt-get update &&\
-	apt-get install -y sudo git-core subversion mercurial build-essential libssl-dev libncurses5-dev unzip gawk wget zlib1g-dev curl &&\
+	apt-get install -y subversion g++ zlib1g-dev build-essential git python &&\
+	python3 python3-distutils libncurses5-dev gawk gettext unzip file &&\
+	libssl-dev wget libelf-dev ecj fastjar java-propose-classpath &&\
 	apt-get clean -y &&\
  	useradd -m openwrt &&\
 	echo 'openwrt ALL=NOPASSWD: ALL' > /etc/sudoers.d/openwrt &&\
