@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:latest
 
 RUN apt-get update &&\
 	apt-get install -y sudo git-core subversion mercurial build-essential libssl-dev libncurses5-dev unzip gawk wget zlib1g-dev curl &&\
