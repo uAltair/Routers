@@ -1,10 +1,7 @@
 FROM ubuntu:latest
 
-RUN apt-get update &&\
-	apt-get install -y subversion g++ zlib1g-dev build-essential git python &&\
-	python3 python3-distutils libncurses5-dev gawk gettext unzip file &&\
-	libssl-dev wget libelf-dev ecj fastjar java-propose-classpath &&\
-	apt-get clean -y &&\
+RUN apt-get update
+RUN apt-get install -y subversion g++ zlib1g-dev build-essential git python &&\
  	useradd -m openwrt &&\
 	echo 'openwrt ALL=NOPASSWD: ALL' > /etc/sudoers.d/openwrt &&\
 	sudo -iu openwrt git clone -b master https://github.com/openwrt/openwrt.git openwrt-project
