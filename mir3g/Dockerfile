@@ -1,7 +1,8 @@
 FROM ubuntu:latest
-
+ENV TZ=Europe/Kiev
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update
-RUN apt-get install -y subversion g++ zlib1g-dev build-essential git python &&\
+RUN apt-get install -y apt-utils curl libidn2 subversion g++ zlib1g-dev build-essential git python python3 python3-distutils libncurses5-dev gawk gettext unzip file libssl-dev wget libelf-dev ecj fastjar java-propose-classpath sudo &&\
  	useradd -m openwrt &&\
 	echo 'openwrt ALL=NOPASSWD: ALL' > /etc/sudoers.d/openwrt &&\
 	sudo -iu openwrt git clone -b master https://github.com/openwrt/openwrt.git openwrt-project
