@@ -1,0 +1,96 @@
+diff -ruNp linux-4.14.56.orig/drivers/media/dvb-frontends/cxd2841er.c linux-4.14.56/drivers/media/dvb-frontends/cxd2841er.c
+--- linux-4.14.56.orig/drivers/media/dvb-frontends/cxd2841er.c	2018-07-26 19:32:04.000000000 +0300
++++ linux-4.14.56/drivers/media/dvb-frontends/cxd2841er.c	2018-08-09 17:17:47.675885871 +0300
+@@ -3822,8 +3822,9 @@ static int cxd2841er_init_tc(struct dvb_
+ 		((priv->flags & CXD2841ER_TS_SERIAL) ? 0x80 : 0x00), 0x80);
+
+ 	/* clear TSCFG bits 3+4 */
+-	if (priv->flags & CXD2841ER_TSBITS)
+-		cxd2841er_set_reg_bits(priv, I2C_SLVT, 0xc4, 0x00, 0x18);
++	if (priv->flags & CXD2841ER_TSBITS) {
++		cxd2841er_set_reg_bits(priv, I2C_SLVT, 0xc4, 0x00, 0x08);
++		cxd2841er_set_reg_bits(priv, I2C_SLVT, 0xc4, 0x00, 0x10); }
+
+ 	cxd2841er_init_stats(fe);
+
+diff -ruNp linux-4.14.56.orig/drivers/media/usb/dvb-usb-v2/Kconfig linux-4.14.56/drivers/media/usb/dvb-usb-v2/Kconfig
+--- linux-4.14.56.orig/drivers/media/usb/dvb-usb-v2/Kconfig	2018-07-26 19:32:04.000000000 +0300
++++ linux-4.14.56/drivers/media/usb/dvb-usb-v2/Kconfig	2018-08-09 11:03:28.910584024 +0300
+@@ -129,6 +129,7 @@ config DVB_USB_RTL28XXU
+ 	depends on DVB_USB_V2 && I2C_MUX
+ 	select DVB_MN88472 if MEDIA_SUBDRV_AUTOSELECT
+ 	select DVB_MN88473 if MEDIA_SUBDRV_AUTOSELECT
++	select DVB_CXD2841ER if MEDIA_SUBDRV_AUTOSELECT
+ 	select DVB_RTL2830
+ 	select DVB_RTL2832
+ 	select DVB_RTL2832_SDR if (MEDIA_SUBDRV_AUTOSELECT && MEDIA_SDR_SUPPORT)
+diff -ruNp linux-4.14.56.orig/drivers/media/usb/dvb-usb-v2/rtl28xxu.c linux-4.14.56/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+--- linux-4.14.56.orig/drivers/media/usb/dvb-usb-v2/rtl28xxu.c	2018-07-26 19:32:04.000000000 +0300
++++ linux-4.14.56/drivers/media/usb/dvb-usb-v2/rtl28xxu.c	2018-08-09 11:03:44.950993598 +0300
+@@ -386,6 +386,7 @@ static int rtl2832u_read_config(struct d
+ 	struct rtl28xxu_req req_mn88473 = {0xff38, CMD_I2C_RD, 1, buf};
+ 	struct rtl28xxu_req req_si2157 = {0x00c0, CMD_I2C_RD, 1, buf};
+ 	struct rtl28xxu_req req_si2168 = {0x00c8, CMD_I2C_RD, 1, buf};
++	struct rtl28xxu_req req_cxd2837 = {0xfdd8, CMD_I2C_RD, 1, buf}; /* reg 0xfd, addr 0x6c << 1 = 0xd8, chip id value = 0xb1(cxd2837) */
+
+ 	dev_dbg(&d->intf->dev, "\n");
+
+@@ -567,6 +568,13 @@ tuner_found:
+ 			dev->slave_demod = SLAVE_DEMOD_MN88473;
+ 			goto demod_found;
+ 		}
++
++		ret = rtl28xxu_ctrl_msg(d, &req_cxd2837);
++		if (ret == 0 && buf[0] == 0xb1) {
++			dev_dbg(&d->intf->dev, "CXD2837 found\n");
++			dev->slave_demod = SLAVE_DEMOD_CXD2837;
++			goto demod_found;
++		}
+ 	}
+ 	if (dev->tuner == TUNER_RTL2832_SI2157) {
+ 		/* check Si2168 ID register; reg=c8 val=80 */
+@@ -989,6 +997,22 @@ static int rtl2832u_frontend_attach(stru
+ 			}
+
+ 			dev->i2c_client_slave_demod = client;
++		} else if (dev->slave_demod == SLAVE_DEMOD_CXD2837) {
++			struct cxd2841er_config cxd2837_config = {};
++
++			cxd2837_config.i2c_addr = 0xd8;
++			cxd2837_config.xtal = SONY_XTAL_20500;
++			cxd2837_config.flags = (CXD2841ER_TS_SERIAL | CXD2841ER_TSBITS |
++						  CXD2841ER_NO_AGCNEG | CXD2841ER_AUTO_IFHZ |
++						  CXD2841ER_EARLY_TUNE);
++
++			dev->i2c_client_slave_demod = NULL; /* Not used, module cxd2841er auto detach on exit! */
++
++			adap->fe[1] = dvb_attach(cxd2841er_attach_t_c, &cxd2837_config, &d->i2c_adap);
++			if(adap->fe[1] == NULL) {
++				dev->slave_demod = SLAVE_DEMOD_NONE;
++				goto err_slave_demod_failed;
++			}
+ 		} else {
+ 			struct si2168_config si2168_config = {};
+ 			struct i2c_adapter *adapter;
+diff -ruNp linux-4.14.56.orig/drivers/media/usb/dvb-usb-v2/rtl28xxu.h linux-4.14.56/drivers/media/usb/dvb-usb-v2/rtl28xxu.h
+--- linux-4.14.56.orig/drivers/media/usb/dvb-usb-v2/rtl28xxu.h	2018-07-26 19:32:04.000000000 +0300
++++ linux-4.14.56/drivers/media/usb/dvb-usb-v2/rtl28xxu.h	2018-08-09 11:03:53.351208094 +0300
+@@ -31,6 +31,7 @@
+ #include "rtl2832_sdr.h"
+ #include "mn88472.h"
+ #include "mn88473.h"
++#include "cxd2841er.h"
+
+ #include "qt1010.h"
+ #include "mt2060.h"
+@@ -87,7 +88,8 @@ struct rtl28xxu_dev {
+ 	#define SLAVE_DEMOD_MN88472        1
+ 	#define SLAVE_DEMOD_MN88473        2
+ 	#define SLAVE_DEMOD_SI2168         3
+-	unsigned int slave_demod:2;
++	#define SLAVE_DEMOD_CXD2837        4
++	unsigned int slave_demod:3;
+ 	union {
+ 		struct rtl2830_platform_data rtl2830_platform_data;
+ 		struct rtl2832_platform_data rtl2832_platform_data;
+ 
