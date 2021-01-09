@@ -2,4 +2,4 @@
 
 Firmware build tools for my routers
 
-`docker run -it --user openwrt  ualtair/mir3g`
+`docker run -it --user build  ualtair/mir3g`
