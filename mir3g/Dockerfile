@@ -40,7 +40,7 @@ RUN mkdir -p /home/build
 RUN chown -R build /home/build
 
 # 2. Download the OpenWrt bleeding edge with git
-RUN su -c "cd ~ && git clone -b openwrt-19.07 https://github.com/openwrt/openwrt.git" build
+RUN su -c "cd ~ && git clone -b master https://github.com/openwrt/openwrt.git" build
 #RUN su -c "cd ~ && git checkout v19.07.5" build
 
 # 3. (optional) Download and install all available "feeds"
