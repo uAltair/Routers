@@ -3,3 +3,5 @@
 Firmware build tools for my routers
 
 `docker run -it --user build  ualtair/mir3g`
+
+curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Dockerfile | docker build -f - .
