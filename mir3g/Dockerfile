@@ -48,8 +48,8 @@ RUN su -c "cd ~/openwrt && ./scripts/feeds update -a" build
 RUN su -c "cd ~/openwrt && ./scripts/feeds install -a" build
 
 # 4. Make OpenWrt Buildroot check for missing packages on your build-system
-RUN curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Diffconfig --output .config
-RUN curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/rtl28xxu.patch --output rtl28xxu.patch
+RUN su -c "curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Diffconfig --output Difconfig" build
+RUN su -c "curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/rtl28xxu.patch --output rtl28xxu.patch" build
 
 RUN su -c "cd ~/openwrt && make defconfig" build
 RUN su -c "cd ~/openwrt && make prereq" build
