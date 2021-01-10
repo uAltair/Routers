@@ -2,6 +2,9 @@
 
 Firmware build tools for my routers
 
-`docker run -it --user build  ualtair/mir3g`
+`docker run -it --user build --name mir3g  ualtair/mir3g`
 
-curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Dockerfile | docker build -f - .
+curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Dockerfile
+
+docker cp mir3g:/home/build/openwrt/bin/targets/ramips/mt7621 s:/DockerDesktop/img
+docker cp mir3g:/home/build/openwrt/bin/targets/ramips/mt7621 s:/DockerDesktop/img
