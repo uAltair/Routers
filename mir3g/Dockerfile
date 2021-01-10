@@ -48,12 +48,13 @@ RUN su -c "cd ~/openwrt && ./scripts/feeds update -a" build
 RUN su -c "cd ~/openwrt && ./scripts/feeds install -a" build
 
 # 4. Make OpenWrt Buildroot check for missing packages on your build-system
-RUN su -c "curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Diffconfig --output Diffconfig" build
-RUN su -c "cat diffconfig >> .config" build
-RUN su -c "curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/rtl28xxu.patch --output rtl28xxu.patch" build
+RUN su -c "cd ~/openwrt && curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Diffconfig --output Diffconfig" build
+RUN su -c "cd ~/openwrt && cat Diffconfig >> .config" build
+RUN su -c "cd ~/openwrt && curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/rtl28xxu.patch --output rtl28xxu.patch" build
 
 RUN su -c "cd ~/openwrt && make defconfig" build
 RUN su -c "cd ~/openwrt && make prereq" build
+RUN su -c "cd ~/openwrt && make download" build
 
 # 5. Add build.local/ to container
 #ADD build.local /home/build
