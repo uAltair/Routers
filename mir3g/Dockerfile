@@ -7,7 +7,6 @@
 
 FROM debian:latest
 
-MAINTAINER altair, safativ@gmail.com
 
 # Make sure the package repository is up to date
 RUN apt-get update
