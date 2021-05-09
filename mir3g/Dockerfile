@@ -41,18 +41,21 @@ RUN chown -R build /home/build
 
 # 2. Download the OpenWrt bleeding edge with git
 RUN su -c "cd ~ && git clone -b master https://github.com/openwrt/openwrt.git" build
-#RUN su -c "cd ~ && git checkout v19.07.5" build
+RUN su -c "cd ~/openwrt  && git checkout v21.02.0-rc1" build
 
 # 3. (optional) Download and install all available "feeds"
 RUN su -c "cd ~/openwrt && ./scripts/feeds update -a" build
 RUN su -c "cd ~/openwrt && ./scripts/feeds install -a" build
 
 # 4. Make OpenWrt Buildroot check for missing packages on your build-system
-RUN su -c "cd ~/openwrt && curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Diffconfig --output .config" build
-#RUN su -c "cd ~/openwrt && cat Diffconfig >> .config" build
+
+#RUN su -c "cd ~/openwrt && rm .config" build
+RUN su -c "cd ~/openwrt && curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Diffconfig --output Diffconfig" build
+RUN su -c "cd ~/openwrt && cat Diffconfig >> .config" build
+RUN su -c "cd ~/openwrt && make defconfig" build
 RUN su -c "cd ~/openwrt && curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/rtl28xxu.patch --output rtl28xxu.patch" build
 
-RUN su -c "cd ~/openwrt && make defconfig" build
+
 RUN su -c "cd ~/openwrt && make prereq" build
 RUN su -c "cd ~/openwrt && make download" build
 
