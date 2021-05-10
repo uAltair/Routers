@@ -40,7 +40,7 @@ RUN chown -R build /home/build
 
 # 2. Download the OpenWrt bleeding edge with git
 RUN su -c "cd ~ && git clone -b master https://github.com/openwrt/openwrt.git" build
-RUN su -c "cd ~/openwrt  && git checkout v21.02.0-rc1" build
+RUN su -c "cd ~/openwrt  && git checkout master" build
 
 # 3. (optional) Download and install all available "feeds"
 RUN su -c "cd ~/openwrt && ./scripts/feeds update -a" build
