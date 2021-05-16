@@ -20,6 +20,7 @@ RUN apt-get install -y curl
 # Make sure the directory exists, otherwise sshd will not start
 RUN mkdir -p /var/run/sshd
 RUN apt-get install -y screen
+RUN apt-get install -y lsmod
 
 # Install prerequisite packages for OpenWrt BuildRoot
 RUN apt-get -y install git-core build-essential libssl-dev
@@ -53,7 +54,7 @@ RUN su -c "cd ~/openwrt && ./scripts/feeds install -a" build
 RUN su -c "cd ~/openwrt && curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/Diffconfig --output Diffconfig" build
 RUN su -c "cd ~/openwrt && cat Diffconfig >> .config" build
 RUN su -c "cd ~/openwrt && make defconfig" build
-RUN su -c "cd ~/openwrt && curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/rtl28xxu.patch --output rtl28xxu.patch" build
+#RUN su -c "cd ~/openwrt && curl https://raw.githubusercontent.com/uAltair/Routers/master/mir3g/rtl28xxu.patch --output rtl28xxu.patch" build
 
 
 RUN su -c "cd ~/openwrt && make prereq" build
