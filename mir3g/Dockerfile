@@ -29,6 +29,7 @@ RUN apt-get -y install rsync
 RUN apt-get -y install python3
 RUN apt-get -y install python3-setuptools
 RUN apt-get -y install kmod
+RUN apt-get -y install zlib1g-dev
 RUN mkdir -p /shared
 
 # NOTE: Uncomment if user "build" is not already created inside the base image
@@ -39,10 +40,10 @@ RUN chown -R build /home/build
 
 # 2. Download the OpenWrt bleeding edge with git
 
-RUN su -c "cd ~ && git clone -b master https://gitlab.nic.cz/turris/openwrt.git" build
-RUN su -c "cd ~/openwrt  && git checkout stable" build
-#RUN su -c "cd ~ && git clone -b master https://github.com/openwrt/openwrt.git" build
-#RUN su -c "cd ~/openwrt  && git checkout v21.02.0-rc1" build
+#RUN su -c "cd ~ && git clone -b master https://github.com/CZ-NIC/turris-os.git" build
+#RUN su -c "cd ~/turris-os && git checkout master" build
+RUN su -c "cd ~ && git clone -b master https://github.com/openwrt/openwrt.git" build
+RUN su -c "cd ~/openwrt  && git checkout v21.02.0-rc1" build
 #RUN su -c "cd ~/openwrt/package  && git clone -b master https://github.com/tmn505/openwrt-dvb.git" build
 
 # 3. (optional) Download and install all available "feeds"
