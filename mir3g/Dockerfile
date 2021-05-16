@@ -20,8 +20,6 @@ RUN apt-get install -y curl
 # Make sure the directory exists, otherwise sshd will not start
 RUN mkdir -p /var/run/sshd
 RUN apt-get install -y screen
-RUN apt-get install -y lsmod
-
 # Install prerequisite packages for OpenWrt BuildRoot
 RUN apt-get -y install git-core build-essential libssl-dev
 RUN apt-get -y install subversion
@@ -30,7 +28,7 @@ RUN apt-get -y install libxml-parser-perl
 RUN apt-get -y install rsync
 RUN apt-get -y install python3
 RUN apt-get -y install python3-setuptools
-
+RUN apt-get -y install lsmod
 RUN mkdir -p /shared
 
 # NOTE: Uncomment if user "build" is not already created inside the base image
