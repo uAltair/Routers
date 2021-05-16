@@ -28,7 +28,7 @@ RUN apt-get -y install libxml-parser-perl
 RUN apt-get -y install rsync
 RUN apt-get -y install python3
 RUN apt-get -y install python3-setuptools
-RUN apt-get -y install lsmod
+RUN apt-get -y install kmod
 RUN mkdir -p /shared
 
 # NOTE: Uncomment if user "build" is not already created inside the base image
