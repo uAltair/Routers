@@ -1,0 +1,21 @@
+ake[6]: Entering directory '/home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/v4l-dvb-linuxtv-2021-03-09-06919236/linux'
+Patches for 5.4.111 already applied.
+make[6]: Leaving directory '/home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/v4l-dvb-linuxtv-2021-03-09-06919236/linux'
+make -C /home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/linux-5.4.111 M=/home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/v4l-dvb-linuxtv-2021-03-09-06919236/v4l  modules
+make[6]: Entering directory '/home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/linux-5.4.111'
+Makefile:671: arch/mipsel/Makefile: No such file or directory
+make[6]: *** No rule to make target 'arch/mipsel/Makefile'.  Stop.
+make[6]: Leaving directory '/home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/linux-5.4.111'
+make[5]: *** [Makefile:53: default] Error 2
+make[5]: Leaving directory '/home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/v4l-dvb-linuxtv-2021-03-09-06919236/v4l'
+make[4]: *** [Makefile:26: all] Error 2
+make[4]: Leaving directory '/home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/v4l-dvb-linuxtv-2021-03-09-06919236'
+make[3]: *** [Makefile:87: /home/build/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/v4l-dvb-linuxtv-2021-03-09-06919236/.built] Error 2
+make[3]: Leaving directory '/home/build/openwrt/package/openwrt-dvb/v4l-dvb'
+time: package/openwrt-dvb/v4l-dvb/compile#440.55#123.75#789.07
+    ERROR: package/openwrt-dvb/v4l-dvb failed to build.
+make[2]: *** [package/Makefile:114: package/openwrt-dvb/v4l-dvb/compile] Error 1
+make[2]: Leaving directory '/home/build/openwrt'
+make[1]: *** [package/Makefile:108: /home/build/openwrt/staging_dir/target-mipsel_24kc_musl/stamp/.package_compile] Error 2
+make[1]: Leaving directory '/home/build/openwrt'
+make: *** [/home/build/openwrt/include/toplevel.mk:230: world] Error 2
