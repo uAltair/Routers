@@ -6,7 +6,8 @@
 # ===========================================================================================
 
 FROM debian:latest
-
+ENV TZ=Europe/Kiev
+ENV FORCE_UNSAFE_CONFIGURE=1
 
 # Make sure the package repository is up to date
 RUN apt-get update
