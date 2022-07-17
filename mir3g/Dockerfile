@@ -2,7 +2,7 @@
 # Dockerfile for building OpenWrt
 #
 # References:
-#	http://wiki.openwrt.org/doc/howto/buildroot.exigence
+#	http://wiki.openwrt.org/doc/howto/buildroot.exigence 
 # ===========================================================================================
 
 FROM debian:latest
