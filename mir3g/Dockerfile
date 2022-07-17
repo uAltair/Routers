@@ -43,7 +43,7 @@ RUN chown -R build /home/build
 #RUN su -c "cd ~ && git clone -b master https://github.com/CZ-NIC/turris-os.git" build
 #RUN su -c "cd ~/turris-os && git checkout master" build
 RUN su -c "cd ~ && git clone -b master https://github.com/openwrt/openwrt.git" build
-RUN su -c "cd ~/openwrt  && git checkout v21.02.0-rc1" build
+RUN su -c "cd ~/openwrt  && git checkout v22.03.0-rc5" build
 RUN su -c "cd ~/openwrt/package  && git clone -b master https://github.com/tmn505/openwrt-dvb.git" build
 
 # 3. (optional) Download and install all available "feeds"
