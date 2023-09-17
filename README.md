@@ -12,4 +12,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j$(($(np
 
 
 docker cp mir3g:/home/build/openwrt/bin/targets/ramips/mt7621 s:/DockerDesktop/img
-docker cp mir3g:/home/build/openwrt/bin/targets/ramips/mt7621 s:/DockerDesktop/img
+
