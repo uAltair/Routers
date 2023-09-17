@@ -8,7 +8,7 @@ docker build -t ualtair/mir3g .
 
 docker run -it --user build --name mir3g  ualtair/mir3g
 
-make -j$(($(nproc)+1)) V=s ; echo -e '\a'
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make -j$(($(nproc)+1)) V=s ; echo -e '\a'
 
 
 docker cp mir3g:/home/build/openwrt/bin/targets/ramips/mt7621 s:/DockerDesktop/img
